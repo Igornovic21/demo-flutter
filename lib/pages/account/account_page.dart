@@ -1,4 +1,5 @@
-import 'package:demo/utils/color_palette.dart';
+import 'package:demo/widgets/appbar_widget.dart';
+import 'package:demo/widgets/avatar_widget.dart';
 import 'package:demo/widgets/button_widget.dart';
 import 'package:demo/widgets/input_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,82 +15,59 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Row(children: const [
-          Icon(Icons.menu),
-          SizedBox(
-            width: 8,
-          ),
-          Icon(Icons.arrow_back_ios)
-        ]),
-        title: const Text("Account"),
-        centerTitle: true,
-        backgroundColor: ColorPallette.primary,
-        shadowColor: Colors.transparent,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 5.0),
-            child: Icon(Icons.settings),
-          )
-        ],
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: AppBarWidget(title: 'ACCOUNT',),
       ),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
-        children: [
+        children: const[
           Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: CircleAvatar(
-              radius: 50,
-              backgroundColor: ColorPallette.primary,
-              child: const Icon(
-                Icons.person,
-                size: 60,
-                color: Colors.white,
-              ),
-            ),
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: AvatarWidget(bgcolor: Colors.blue, psncolor: Colors.white, avticon: Icons.person,), //je n'arrive pas a mettre les ccouleurs de color palette
           ),
-          const Text("YOUR NAME"),
-          const Padding(
+          Text("YOUR NAME"),
+          Padding(
             padding: EdgeInsets.only(bottom: 5.0),
             child: InputWidget(
               hintText: "KARINA BUYS",
               maxlines: 1,
             ),
           ),
-          const Text("BANK ACCOUNT"),
-          const Padding(
+          Text("BANK ACCOUNT"),
+          Padding(
             padding: EdgeInsets.only(bottom: 5.0),
             child: InputWidget(
               hintText: "00 123 456",
               maxlines: 1,
             ),
           ),
-          const Text("EMAIL"),
-          const Padding(
+          Text("EMAIL"),
+          Padding(
             padding: EdgeInsets.only(bottom: 5.0),
             child: InputWidget(
               hintText: "karina_buys@gmail.com",
               maxlines: 1,
             ),
           ),
-          const Text("PASSWORD"),
-          const Padding(
+          Text("PASSWORD"),
+          Padding(
             padding: EdgeInsets.only(bottom: 5.0),
             child: InputWidget(
               hintText: "************",
               maxlines: 1,
             ),
           ),
-          const Text("PHONE NUMBER"),
-          const Padding(
+          Text("PHONE NUMBER"),
+          Padding(
             padding: EdgeInsets.only(bottom: 5.0),
             child: InputWidget(
               hintText: "+44 558 257 68 005",
               maxlines: 1,
             ),
           ),
-          const Text("YOUR ADDRESS"),
-          const Padding(
+          Text("YOUR ADDRESS"),
+          Padding(
             padding: EdgeInsets.only(bottom: 5.0),
             child: InputWidget(
               hintText:
@@ -97,12 +75,12 @@ class _AccountPageState extends State<AccountPage> {
               maxlines: 5,
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
             child: Text(
                 "* Nunc faucibus a pellentesque sit amet porttitor eget dolor morbi non."),
           ),
-          const ButtonWidget(
+          ButtonWidget(
             title: "SAVE CHANGES",
           )
         ],
