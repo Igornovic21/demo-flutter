@@ -13,23 +13,27 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: const Row(children: [
-          Icon(Icons.menu),
-          SizedBox(
-            width: 8,
+      title: Row(
+        children: [
+          IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back_ios),
           ),
-          Icon(Icons.arrow_back_ios)
-        ]),
-        title: Text(widget.title),
-        centerTitle: true,
-        backgroundColor: ColorPallette.primary,
-        shadowColor: Colors.transparent,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 5.0),
-            child: Icon(Icons.settings),
-          )
+          const SizedBox(
+            width: 10,
+          ),
+          Text(widget.title),
         ],
+      ),
+      centerTitle: true,
+      backgroundColor: ColorPallette.primary,
+      shadowColor: Colors.transparent,
+      actions: const [
+        Padding(
+          padding: EdgeInsets.only(right: 5.0),
+          child: Icon(Icons.settings),
+        )
+      ],
     );
   }
 }

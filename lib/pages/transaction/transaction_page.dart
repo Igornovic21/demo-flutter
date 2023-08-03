@@ -1,5 +1,6 @@
 import 'package:demo/utils/color_palette.dart';
 import 'package:demo/widgets/appbar_widget.dart';
+import 'package:demo/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -12,7 +13,11 @@ class TransactionPage extends StatefulWidget {
 class _TransactionPageState extends State<TransactionPage> {
   int _activeTabs = 0;
 
-  void _setCurrentTabs() {
+  void _setCurrentTabs(int index) {
+    if (index == _activeTabs) {
+      return;
+    }
+
     if (_activeTabs == 0) {
       setState(() {
         _activeTabs = 1;
@@ -24,7 +29,7 @@ class _TransactionPageState extends State<TransactionPage> {
     }
   }
 
-  final List<Map<String, dynamic>> paymentsInProgress = [
+  final List<Map<String, dynamic>> _paymentsInProgress = [
     {
       "color": const Color.fromARGB(255, 71, 166, 218),
       "title": "Lorem Ipsum Company",
@@ -39,7 +44,7 @@ class _TransactionPageState extends State<TransactionPage> {
     },
   ];
 
-  final List<Map<String, dynamic>> paymentsComplete = [
+  final List<Map<String, dynamic>> _paymentsComplete = [
     {
       "color": const Color.fromARGB(255, 218, 71, 162),
       "title": "Lorem Ipsum Company",
@@ -55,36 +60,56 @@ class _TransactionPageState extends State<TransactionPage> {
   ];
 
   Widget _buildStatusWidget(String title, int index) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(
-        color: _activeTabs == index ? const Color.fromARGB(255, 71, 166, 218) : Colors.grey,
-        borderRadius: const BorderRadius.only(topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))
-      ),
-      child: Center(
-        child: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+    return Builder(
+      builder: (context) {
+        return InkWell(
+          onTap: () => _setCurrentTabs(index),
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                color: _activeTabs == index
+                    ? const Color.fromARGB(255, 71, 166, 218)
+                    : Colors.grey,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(25.0), topRight: Radius.circular(25.0))),
+            child: Center(
+                child: Text(
+              title,
+              style:
+                  const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
+          ),
+        );
+      }
     );
   }
 
-  Widget _buildTransactionWidget(Color color, String title, String description, String price) {
+  Widget _buildTransactionWidget(
+      Color color, String title, String description, String price) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: SizedBox(
-        height: 50,
-        child: ListTile(
-          leading: CircleAvatar(backgroundColor: color, radius: 30,),
-          title: Text(title),
-          subtitle: Text(description),
-          trailing: Text(price),
-        )
-      ),
+          height: 50,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: color,
+              radius: 30,
+            ),
+            title: Text(title),
+            subtitle: Text(description),
+            trailing: Text(price),
+          )),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(preferredSize: Size.fromHeight(50), child: AppBarWidget(title: "Transactions"),),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: AppBarWidget(title: "Transactions"),
+      ),
+      drawer: const DrawerWidget(),
       body: ListView(
         children: [
           Container(
@@ -94,12 +119,12 @@ class _TransactionPageState extends State<TransactionPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
-                  child: Padding(
+                    child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: _buildStatusWidget("COMPLETE", 0),
                 )),
                 Expanded(
-                  child: Padding(
+                    child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: _buildStatusWidget("IN PROGRESS", 1),
                 )),
@@ -107,9 +132,21 @@ class _TransactionPageState extends State<TransactionPage> {
             ),
           ),
           Column(
-            children: _activeTabs == 0 ?
-              paymentsComplete.map((payment) => _buildTransactionWidget(payment["color"], payment["title"], payment["description"],payment["price"])).toList() :
-              paymentsInProgress.map((payment) => _buildTransactionWidget(payment["color"], payment["title"], payment["description"],payment["price"])).toList(),
+            children: _activeTabs == 0
+                ? _paymentsComplete
+                    .map((payment) => _buildTransactionWidget(
+                        payment["color"],
+                        payment["title"],
+                        payment["description"],
+                        payment["price"]))
+                    .toList()
+                : _paymentsInProgress
+                    .map((payment) => _buildTransactionWidget(
+                        payment["color"],
+                        payment["title"],
+                        payment["description"],
+                        payment["price"]))
+                    .toList(),
           )
         ],
       ),

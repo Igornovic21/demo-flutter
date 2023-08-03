@@ -2,6 +2,7 @@ import 'package:demo/pages/payment/widgets/payment_type_widget.dart';
 import 'package:demo/utils/color_palette.dart';
 import 'package:demo/widgets/appbar_widget.dart';
 import 'package:demo/widgets/avatar_widget.dart';
+import 'package:demo/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _PaymentPageState extends State<PaymentPage> {
         preferredSize: Size.fromHeight(50),
         child: AppBarWidget(title: 'PAYMENT',),
       ),
+      drawer: const DrawerWidget(),
       body: ListView(
         children: [
           Container(
